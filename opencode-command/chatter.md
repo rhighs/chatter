@@ -1,5 +1,5 @@
 ---
-description: Sync any skill file to the shared team repo and open a PR. Use when you want to share a skill with the team — from amarcord, hand-written, or any source. Also use /chatter pull to get the latest skills from teammates.
+description: Sync any skill file to the shared team repo and open a PR. Use when you want to share a skill with the team. Also use /chatter pull to get the latest skills from teammates.
 ---
 
 # /chatter
@@ -20,7 +20,7 @@ One person learns, everyone benefits.
 ## sync
 
 Run this when you want to share a skill with the team.
-The skill can come from anywhere — amarcord extraction, written by hand, or AI-generated.
+The skill can come from anywhere: written by hand, AI-generated, or extracted from a session.
 
 Trigger phrases: "sync this skill", "share this to the team", "open a PR for this skill"
 

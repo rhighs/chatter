@@ -1,8 +1,7 @@
 ---
 name: chatter
 description: |
-  Sync locally extracted skills to the shared team repo. Use after amarcord
-  extracts a skill when the user wants to share it with teammates. Triggers:
+  Sync skill files to the shared team repo. Triggers:
   "share this skill", "sync to team", "open a PR for this", /chatter.
   Also handles: "pull team skills", "get latest from team".
 version: 1.0.0
@@ -13,11 +12,10 @@ allowed-tools:
 
 # chatter
 
-Distributes skills extracted by amarcord to the shared team repo via PR.
+Distributes skill files to the shared team repo via PR.
 
 ## When to Use
 
-- User runs `/amarcord` and a skill is saved — offer to sync it
 - User says "share this with the team" or "open a PR for this skill"
 - User says "pull latest skills" or "get team skills"
 

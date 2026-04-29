@@ -67,7 +67,7 @@ git push origin "$BRANCH" --quiet
 
 gh pr create \
   --title "skill: ${SKILL_NAME}" \
-  --body "Extracted by [amarcord](https://github.com/rhighs/amarcord) + synced by chatter.
+  --body "Synced by chatter.
 
 **Install after merge:**
 \`\`\`bash
