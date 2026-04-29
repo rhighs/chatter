@@ -21,7 +21,7 @@ TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
 export HOME="$TMP_DIR/home"
-mkdir -p "$HOME/.config/chiacchiere" "$HOME/.config/opencode/commands" "$HOME/.claude"
+mkdir -p "$HOME/.config/chatter" "$HOME/.config/opencode/commands" "$HOME/.claude"
 
 REMOTE_REPO="$TMP_DIR/remote.git"
 SEED_REPO="$TMP_DIR/seed"
@@ -65,7 +65,7 @@ git -C "$SEED_REPO" push -u origin main >/dev/null
 git clone "$REMOTE_REPO" "$TEAM_REPO" >/dev/null
 git -C "$TEAM_REPO" checkout -B main origin/main >/dev/null
 
-cat > "$HOME/.config/chiacchiere/team.conf" <<EOF
+cat > "$HOME/.config/chatter/team.conf" <<EOF
 TEAM_REPO_PATH="$TEAM_REPO"
 TEAM_REPO_REMOTE="$REMOTE_REPO"
 EOF

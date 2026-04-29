@@ -21,7 +21,7 @@ TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
 export HOME="$TMP_DIR/home"
-mkdir -p "$HOME/.config/chiacchiere"
+mkdir -p "$HOME/.config/chatter"
 
 REMOTE_REPO="$TMP_DIR/remote.git"
 SEED_REPO="$TMP_DIR/seed"
@@ -48,7 +48,7 @@ git -C "$TEAM_REPO" checkout -B main origin/main >/dev/null
 git -C "$TEAM_REPO" config user.name "Test User"
 git -C "$TEAM_REPO" config user.email "test@example.com"
 
-cat > "$HOME/.config/chiacchiere/team.conf" <<EOF
+cat > "$HOME/.config/chatter/team.conf" <<EOF
 TEAM_REPO_PATH="$TEAM_REPO"
 TEAM_REPO_REMOTE="$REMOTE_REPO"
 EOF
@@ -86,7 +86,7 @@ bash "$ROOT_DIR/scripts/sync.sh" "$SKILL_FILE"
 SKILL_NAME="local-skill"
 BRANCH_NAME="$(git -C "$TEAM_REPO" rev-parse --abbrev-ref HEAD)"
 case "$BRANCH_NAME" in
-  "chiacchiere/${SKILL_NAME}-"*) ;;
+  "chatter/${SKILL_NAME}-"*) ;;
   *) fail "Unexpected branch name: $BRANCH_NAME" ;;
 esac
 

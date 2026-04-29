@@ -1,12 +1,12 @@
 #!/bin/bash
-# chiacchiere sync — copy a skill to the team repo and open a PR
+# chatter sync — copy a skill to the team repo and open a PR
 set -e
 
 SKILL_FILE="$1"
-CONF="$HOME/.config/chiacchiere/team.conf"
+CONF="$HOME/.config/chatter/team.conf"
 
 if [ ! -f "$CONF" ]; then
-  echo "No team config. Run: curl -fsSL https://raw.githubusercontent.com/rhighs/chiacchiere/main/install.sh | bash -s -- <repo-url>" >&2
+  echo "No team config. Run: curl -fsSL https://raw.githubusercontent.com/rhighs/chatter/main/install.sh | bash -s -- <repo-url>" >&2
   exit 1
 fi
 source "$CONF"
@@ -16,7 +16,7 @@ if [ ! -f "$SKILL_FILE" ]; then
 fi
 
 SKILL_NAME=$(basename "$SKILL_FILE" .md)
-BRANCH="chiacchiere/${SKILL_NAME}-$(date +%Y%m%d-%H%M%S)"
+BRANCH="chatter/${SKILL_NAME}-$(date +%Y%m%d-%H%M%S)"
 
 cd "$TEAM_REPO_PATH"
 git fetch origin --quiet
@@ -28,8 +28,27 @@ mkdir -p "opencode" "claude/${SKILL_NAME}"
 cp "$SKILL_FILE" "opencode/${SKILL_NAME}.md"
 
 # Claude Code version (add required SKILL.md frontmatter)
-BODY=$(grep -v '^---' "$SKILL_FILE" | grep -v '^description:' | grep -v '^namespace:' | sed '/^$/N;/^\n$/d')
-DESC=$(sed -n '/^description:/,/^[a-z]/{ /^description:/d; /^[a-z]/d; p }' "$SKILL_FILE" | sed 's/^  //')
+# Extract body (everything after the closing --- of frontmatter)
+# If no frontmatter, use the whole file
+if head -1 "$SKILL_FILE" | grep -q '^---$'; then
+  BODY=$(awk 'BEGIN{n=0} /^---$/{n++; next} n>=2{print}' "$SKILL_FILE")
+else
+  BODY=$(cat "$SKILL_FILE")
+fi
+
+# Extract description from frontmatter (multiline YAML scalar)
+DESC=$(awk '
+  BEGIN{in_fm=0; in_desc=0}
+  /^---$/ {in_fm++; next}
+  in_fm==1 && /^description:/ {
+    sub(/^description:[[:space:]]*/, "")
+    if ($0 != "" && $0 != "|") { print; in_desc=0; next }
+    in_desc=1; next
+  }
+  in_fm==1 && in_desc && /^[[:space:]]/ { sub(/^[[:space:]]+/, ""); print; next }
+  in_fm==1 && in_desc { in_desc=0 }
+  in_fm>=2 {exit}
+' "$SKILL_FILE")
 
 cat > "claude/${SKILL_NAME}/SKILL.md" << SKILLEOF
 ---
@@ -48,11 +67,11 @@ git push origin "$BRANCH" --quiet
 
 gh pr create \
   --title "skill: ${SKILL_NAME}" \
-  --body "Extracted by [amarcord](https://github.com/rhighs/amarcord) + synced by chiacchiere.
+  --body "Extracted by [amarcord](https://github.com/rhighs/amarcord) + synced by chatter.
 
 **Install after merge:**
 \`\`\`bash
-chiacchiere pull
+chatter pull
 \`\`\`" \
   --head "$BRANCH" \
   --base main

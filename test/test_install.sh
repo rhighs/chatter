@@ -107,8 +107,8 @@ case "$url" in
   */scripts/pull.sh)
     cp "$ROOT_DIR/scripts/pull.sh" "$out"
     ;;
-  */opencode-command/chiacchiere.md)
-    cp "$ROOT_DIR/opencode-command/chiacchiere.md" "$out"
+  */opencode-command/chatter.md)
+    cp "$ROOT_DIR/opencode-command/chatter.md" "$out"
     ;;
   */claude-skill/SKILL.md)
     cp "$ROOT_DIR/claude-skill/SKILL.md" "$out"
@@ -127,20 +127,20 @@ export ROOT_DIR
 
 bash "$ROOT_DIR/install.sh" "$SOURCE_REPO" "$INSTALL_TARGET"
 
-assert_file "$HOME/.config/chiacchiere/team.conf"
-assert_contains "$HOME/.config/chiacchiere/team.conf" "TEAM_REPO_PATH=\"$INSTALL_TARGET\""
-assert_contains "$HOME/.config/chiacchiere/team.conf" "TEAM_REPO_REMOTE=\"$SOURCE_REPO\""
+assert_file "$HOME/.config/chatter/team.conf"
+assert_contains "$HOME/.config/chatter/team.conf" "TEAM_REPO_PATH=\"$INSTALL_TARGET\""
+assert_contains "$HOME/.config/chatter/team.conf" "TEAM_REPO_REMOTE=\"$SOURCE_REPO\""
 
-assert_exec "$HOME/.config/chiacchiere/sync.sh"
-assert_exec "$HOME/.config/chiacchiere/pull.sh"
-assert_exec "$HOME/.local/bin/chiacchiere"
+assert_exec "$HOME/.config/chatter/sync.sh"
+assert_exec "$HOME/.config/chatter/pull.sh"
+assert_exec "$HOME/.local/bin/chatter"
 
 assert_file "$INSTALL_TARGET/opencode/demo-skill.md"
 assert_file "$INSTALL_TARGET/claude/demo-skill/SKILL.md"
 assert_contains "$CALLS_LOG" "stow --dir=$INSTALL_TARGET opencode"
 assert_contains "$CALLS_LOG" "stow --dir=$INSTALL_TARGET claude"
 
-STATUS_OUTPUT="$($HOME/.local/bin/chiacchiere status)"
-echo "$STATUS_OUTPUT" | grep -q "configured" || fail "chiacchiere status did not report configured"
+STATUS_OUTPUT="$($HOME/.local/bin/chatter status)"
+echo "$STATUS_OUTPUT" | grep -q "configured" || fail "chatter status did not report configured"
 
 echo "PASS: test_install.sh"

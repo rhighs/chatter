@@ -1,15 +1,15 @@
 # team-skills
 
-Shared AI agent skills. Managed by [chiacchiere](https://github.com/rhighs/chiacchiere).
+Shared AI agent skills. Managed by [chatter](https://github.com/rhighs/chatter).
 
 ## Setup (new machine)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rhighs/chiacchiere/main/install.sh | bash -s -- https://github.com/YOUR-ORG/team-skills
+curl -fsSL https://raw.githubusercontent.com/rhighs/chatter/main/install.sh | bash -s -- https://github.com/YOUR-ORG/team-skills
 ```
 
 ## Pull latest
 
 ```bash
-chiacchiere pull
+chatter pull
 ```

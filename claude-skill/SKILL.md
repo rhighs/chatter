@@ -1,9 +1,9 @@
 ---
-name: chiacchiere
+name: chatter
 description: |
   Sync locally extracted skills to the shared team repo. Use after amarcord
   extracts a skill when the user wants to share it with teammates. Triggers:
-  "share this skill", "sync to team", "open a PR for this", /chiacchiere.
+  "share this skill", "sync to team", "open a PR for this", /chatter.
   Also handles: "pull team skills", "get latest from team".
 version: 1.0.0
 allowed-tools:
@@ -11,7 +11,7 @@ allowed-tools:
   - Read
 ---
 
-# chiacchiere
+# chatter
 
 Distributes skills extracted by amarcord to the shared team repo via PR.
 
@@ -26,12 +26,12 @@ Distributes skills extracted by amarcord to the shared team repo via PR.
 ### Check config first
 
 ```bash
-cat ~/.config/chiacchiere/team.conf 2>/dev/null
+cat ~/.config/chatter/team.conf 2>/dev/null
 ```
 
 If missing:
-> chiacchiere is not configured. Set it up with:
-> `curl -fsSL https://raw.githubusercontent.com/rhighs/chiacchiere/main/install.sh | bash -s -- https://github.com/YOUR-ORG/team-skills`
+> chatter is not configured. Set it up with:
+> `curl -fsSL https://raw.githubusercontent.com/rhighs/chatter/main/install.sh | bash -s -- https://github.com/YOUR-ORG/team-skills`
 
 ### Find the skill
 
@@ -44,7 +44,7 @@ ls -t ~/.claude/skills/*/SKILL.md 2>/dev/null | head -1
 ### Run
 
 ```bash
-chiacchiere sync {skill-file-path}
+chatter sync {skill-file-path}
 ```
 
 Report the PR URL.
@@ -52,12 +52,12 @@ Report the PR URL.
 ## pull
 
 ```bash
-chiacchiere pull
+chatter pull
 ```
 
 ## status
 
 ```bash
-cat ~/.config/chiacchiere/team.conf 2>/dev/null && echo "configured" || echo "not configured"
+cat ~/.config/chatter/team.conf 2>/dev/null && echo "configured" || echo "not configured"
 ls ~/.config/opencode/commands/ 2>/dev/null | grep ":"
 ```
